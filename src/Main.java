@@ -50,7 +50,7 @@ public class Main {
         img3.notifyAboutActivation(img3.activate());
         System.out.println("---------------------------------------------");
 
-        System.out.println("ВЫПОЛНЕНИЕ МИССИЙ ГРУППИРОВКИ " + satelliteConstellation.getConstellationName());
+        System.out.println("ВЫПОЛНЕНИЕ МИССИЙ ГРУППИРОВКИ " + satelliteConstellation.getConstellationName().toUpperCase());
         System.out.println("============================================================");
         satelliteConstellation.executeAllMissions();
         System.out.println("---------------------------------------------");

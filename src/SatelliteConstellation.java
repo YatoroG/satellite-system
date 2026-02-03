@@ -3,17 +3,18 @@ import java.util.List;
 
 public class SatelliteConstellation {
     private final String constellationName;
-    private final List<Satellite> satellites;
+    private final List<Satellite> satellites = new ArrayList<>();
 
     public SatelliteConstellation(String constellationName) {
         this.constellationName = constellationName;
-        satellites = new ArrayList<>();
         notifyAboutConstellationCreation();
     }
 
     public void addSatellite(Satellite satellite) {
-        satellites.add(satellite);
-        notifyAboutSatelliteAdding(satellite);
+        if (satellite != null && !satellites.contains(satellite)) {
+            satellites.add(satellite);
+            notifyAboutSatelliteAdding(satellite);
+        }
     }
 
     public void executeAllMissions() {
@@ -27,7 +28,7 @@ public class SatelliteConstellation {
     }
 
     public List<Satellite> getSatellites() {
-        return satellites;
+        return new ArrayList<>(satellites);
     }
 
     public void notifyAboutConstellationCreation() {
