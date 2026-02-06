@@ -16,19 +16,22 @@ public class CommunicationSatellite extends Satellite {
             System.out.println(name + ": Передача данных со скоростью " + bandwidth + " Мбит/с");
             sendData(bandwidth);
             energy.consume(0.05);
-            checkBatteryLevel();
         } else {
             System.out.println("\uD83D\uDD34 " + name + ": Не может выполнить передачу данных - не активен");
         }
     }
 
     private void sendData(double data) {
-        System.out.println(name + ": Отправил " + bandwidth + " Мбит данных!");
+        if (state.isActive()) {
+            System.out.println(name + ": Отправил " + bandwidth + " Мбит данных!");
+        }
     }
 
     @Override
     public String toString() {
-        return "CommunicationSatellite{bandwidth=" + bandwidth + ", name='" + name + "', "
-                + "isActive=" + state.isActive() + ", batteryLevel=" + energy.getBatteryLevel() + "}";
+        return "CommunicationSatellite{bandwidth=" + bandwidth +
+                ", name='" + name + '\'' +
+                ", state=" + state +
+                ", energy=" + energy + "}";
     }
 }

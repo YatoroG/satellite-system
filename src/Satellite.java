@@ -14,11 +14,16 @@ public abstract class Satellite {
         return name;
     }
 
+    public SatelliteState getState() {
+        return state;
+    }
+
+    public EnergySystem getEnergy() {
+        return energy;
+    }
+
     public boolean activate() {
-        if (energy.getBatteryLevel() > 0.2 && !state.isActive()) {
-            state.activate();
-        }
-        notifyAboutActivation(state.isActive());
+        notifyAboutActivation(state.activate(energy.hasSufficientPower()));
         return state.isActive();
     }
 
@@ -26,13 +31,6 @@ public abstract class Satellite {
         if (state.isActive()) {
             state.deactivate();
             System.out.println("Деактивирован спутник: " + name);
-        }
-    }
-
-    public void checkBatteryLevel() {
-        if (energy.getBatteryLevel() < 0.2 && state.isActive()) {
-            System.out.println("\uD83D\uDD34 Низкий заряд: " + name + " деактивируется");
-            state.deactivate();
         }
     }
 

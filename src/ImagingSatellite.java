@@ -22,21 +22,22 @@ public class ImagingSatellite extends Satellite {
             System.out.println(name + ": Съемка территории с разрешением " + resolution + " м/пиксель");
             takePhoto();
             energy.consume(0.08);
-            checkBatteryLevel();
         } else {
             System.out.println("\uD83D\uDD34 " + name + ": Не может выполнить съемку - не активен");
         }
     }
 
     private void takePhoto() {
-        photosTaken++;
-        System.out.println(name + ": Снимок #" + photosTaken + " сделан");
+        if (state.isActive()) {
+            photosTaken++;
+            System.out.println(name + ": Снимок #" + photosTaken + " сделан");
+        }
     }
 
     @Override
     public String toString() {
         return "ImagingSatellite{resolution=" + resolution +
-                ", photosTaken=" + photosTaken + ", name='" + name + "', "
-                + "isActive=" + state.isActive() + ", batteryLevel=" + energy.getBatteryLevel() + "}";
+                ", photosTaken=" + photosTaken + ", name='" + name + '\'' +
+                ", state=" + state + ", energy=" + energy + "}";
     }
 }
