@@ -1,3 +1,5 @@
+package sys;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,13 +9,11 @@ public class SatelliteConstellation {
 
     public SatelliteConstellation(String constellationName) {
         this.constellationName = constellationName;
-        notifyAboutConstellationCreation();
     }
 
     public void addSatellite(Satellite satellite) {
         if (satellite != null && !satellites.contains(satellite)) {
             satellites.add(satellite);
-            notifyAboutSatelliteAdding(satellite);
         }
     }
 
@@ -29,13 +29,5 @@ public class SatelliteConstellation {
 
     public List<Satellite> getSatellites() {
         return new ArrayList<>(satellites);
-    }
-
-    public void notifyAboutConstellationCreation() {
-        System.out.println("Создана спутниковая группировка: " + constellationName);
-    }
-
-    public void notifyAboutSatelliteAdding(Satellite satellite) {
-        System.out.println(satellite.name + " добавлен в группировку " + constellationName);
     }
 }

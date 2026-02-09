@@ -1,3 +1,5 @@
+package sys;
+
 public class CommunicationSatellite extends Satellite {
     private final double bandwidth;
 

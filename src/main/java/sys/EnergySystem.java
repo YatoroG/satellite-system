@@ -1,3 +1,5 @@
+package sys;
+
 public class EnergySystem {
     protected double batteryLevel;
     private static final double LOW_BATTERY_THRESHOLD = 0.2;

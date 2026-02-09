@@ -1,3 +1,5 @@
+package sys;
+
 public abstract class Satellite {
     protected String name;
     protected SatelliteState state;
