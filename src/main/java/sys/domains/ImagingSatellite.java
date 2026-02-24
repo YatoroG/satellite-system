@@ -1,4 +1,4 @@
-package sys;
+package sys.domains;
 
 public class ImagingSatellite extends Satellite {
     private final double resolution;

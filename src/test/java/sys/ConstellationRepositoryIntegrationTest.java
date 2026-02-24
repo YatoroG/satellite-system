@@ -5,6 +5,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import sys.domains.CommunicationSatellite;
+import sys.domains.ImagingSatellite;
+import sys.domains.SatelliteConstellation;
 import sys.repository.ConstellationRepository;
 import sys.service.SpaceOperationCenterService;
 

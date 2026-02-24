@@ -1,8 +1,8 @@
 package sys.service;
 
 import org.springframework.stereotype.Service;
-import sys.Satellite;
-import sys.SatelliteConstellation;
+import sys.domains.Satellite;
+import sys.domains.SatelliteConstellation;
 import sys.repository.ConstellationRepository;
 
 @Service

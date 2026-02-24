@@ -3,7 +3,7 @@ package sys.repository;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.stereotype.Service;
-import sys.SatelliteConstellation;
+import sys.domains.SatelliteConstellation;
 
 @Service
 public class ConstellationRepository {

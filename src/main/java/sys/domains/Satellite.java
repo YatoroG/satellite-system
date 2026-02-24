@@ -1,4 +1,6 @@
-package sys;
+package sys.domains;
+
+import sys.constants.EnergySystemConstants;
 
 public abstract class Satellite {
     protected String name;
@@ -7,7 +9,12 @@ public abstract class Satellite {
 
     public Satellite(String name, double batteryLevel) {
         this.name = name;
-        this.energy = new EnergySystem(batteryLevel);
+        this.energy = EnergySystem.builder()
+                .batteryLevel(batteryLevel)
+                .low_battery_threshold(EnergySystemConstants.LOW_BATTERY_THRESHOLD)
+                .max_battery(EnergySystemConstants.MAX_BATTERY)
+                .min_battery(EnergySystemConstants.MIN_BATTERY)
+                .build();
         this.state = new SatelliteState();
         notifyAboutSatelliteCreation();
     }

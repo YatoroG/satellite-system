@@ -1,4 +1,4 @@
-package sys;
+package sys.domains;
 
 public class SatelliteState {
     private boolean isActive = false;

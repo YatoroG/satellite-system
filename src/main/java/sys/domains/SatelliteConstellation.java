@@ -1,4 +1,4 @@
-package sys;
+package sys.domains;
 
 import java.util.ArrayList;
 import java.util.List;
