@@ -5,11 +5,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import sys.domains.CommunicationSatellite;
-import sys.domains.ImagingSatellite;
-import sys.domains.SatelliteConstellation;
+import sys.domains.*;
+import sys.factory.SatelliteFactory;
+import sys.factory.impl.CommunicationSatelliteFactory;
+import sys.factory.impl.ImagingSatelliteFactory;
 import sys.repository.ConstellationRepository;
 import sys.service.SpaceOperationCenterService;
+import sys.utils.SpaceOperationException;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,22 +23,33 @@ public class ConstellationRepositoryIntegrationTest {
     private static final String CONSTELLATION_2 = "testConstellation2";
     private static final String SATELLITE_1 = "testSatellite1";
     private static final String SATELLITE_2 = "testSatellite2";
-
+    private static final double BATTERY_LEVEL_1 = 0.8;
+    private static final double BATTERY_LEVEL_2 = 0.5;
+    private static final double BANDWIDTH = 300.0;
+    private static final double RESOLUTION = 15.0;
     @Autowired
     private ConstellationRepository repository;
 
     @Autowired
     private SpaceOperationCenterService service;
 
+    @Autowired
+    private SatelliteFactory commFactory;
+
+    @Autowired
+    private SatelliteFactory imgFactory;
+
     @BeforeEach
     void setUp() {
         repository = new ConstellationRepository();
         service = new SpaceOperationCenterService(repository);
+        commFactory = new CommunicationSatelliteFactory();
+        imgFactory = new ImagingSatelliteFactory();
     }
 
     @Test
     @DisplayName("Тестирование репозитория")
-    void testFullConstellationLifecycle() {
+    void testFullConstellationLifecycle() throws SpaceOperationException {
         SatelliteConstellation constellation1 = new SatelliteConstellation(CONSTELLATION_1);
         SatelliteConstellation constellation2 = new SatelliteConstellation(CONSTELLATION_2);
 
@@ -46,10 +59,27 @@ public class ConstellationRepositoryIntegrationTest {
         assertTrue(repository.containsConstellation(CONSTELLATION_1));
         assertTrue(repository.containsConstellation(CONSTELLATION_2));
 
-        service.addSatelliteToConstellation(CONSTELLATION_1,
-                new CommunicationSatellite(SATELLITE_1, 0.8, 500));
-        service.addSatelliteToConstellation(CONSTELLATION_1,
-                new ImagingSatellite(SATELLITE_2, 0.7, 50));
+        CommunicationSatelliteParam commParams = new CommunicationSatelliteParam(
+                SATELLITE_1,
+                BATTERY_LEVEL_1,
+                BANDWIDTH
+        );
+
+        CommunicationSatellite commSatellite = (CommunicationSatellite) commFactory
+                .createSatelliteWithParameter(commParams);
+
+        service.addSatelliteToConstellation(CONSTELLATION_1, commSatellite);
+
+        ImagingSatelliteParam params = new ImagingSatelliteParam(
+                SATELLITE_2,
+                BATTERY_LEVEL_2,
+                RESOLUTION
+        );
+
+        ImagingSatellite imgSatellite = (ImagingSatellite) imgFactory
+                .createSatelliteWithParameter(params);
+
+        service.addSatelliteToConstellation(CONSTELLATION_1, imgSatellite);
 
         assertEquals(2, repository.getConstellation(CONSTELLATION_1).getSatellites().size());
 
