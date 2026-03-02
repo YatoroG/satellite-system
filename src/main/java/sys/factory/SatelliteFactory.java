@@ -1,8 +1,11 @@
 package sys.factory;
 
 import sys.domains.Satellite;
+import sys.domains.SatelliteParam;
+import sys.utils.SatelliteType;
+import sys.utils.SpaceOperationException;
 
 public interface SatelliteFactory {
-    Satellite createSatellite(String name, double batteryLevel);
-    Satellite createSatelliteWithParameter(String name, double batteryLevel, double parameter);
+    Satellite createSatelliteWithParameter(SatelliteParam param) throws SpaceOperationException;
+    boolean isSatelliteTypeSupported(SatelliteType type);
 }

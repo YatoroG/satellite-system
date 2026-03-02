@@ -1,22 +1,29 @@
 package sys.factory.impl;
 
 import org.springframework.stereotype.Component;
-import sys.domains.ImagingSatellite;
-import sys.domains.Satellite;
+import sys.domains.*;
 import sys.factory.SatelliteFactory;
-
-import static sys.constants.SatelliteConstants.DEFAULT_RESOLUTION;
+import sys.utils.SatelliteType;
+import sys.utils.SpaceOperationException;
 
 @Component
 public class ImagingSatelliteFactory implements SatelliteFactory {
 
     @Override
-    public Satellite createSatellite(String name, double batteryLevel) {
-        return new ImagingSatellite(name, batteryLevel, DEFAULT_RESOLUTION);
+    public Satellite createSatelliteWithParameter(SatelliteParam param) throws SpaceOperationException {
+        if (!(param instanceof ImagingSatelliteParam imagingSatelliteParam)) {
+            throw new SpaceOperationException("Ошибка в параметре для спутника изображений");
+        }
+
+        return new ImagingSatellite(
+                imagingSatelliteParam.getName(),
+                imagingSatelliteParam.getBatteryLevel(),
+                imagingSatelliteParam.getResolution()
+        );
     }
 
     @Override
-    public Satellite createSatelliteWithParameter(String name, double batteryLevel, double parameter) {
-        return new ImagingSatellite(name, batteryLevel, parameter);
+    public boolean isSatelliteTypeSupported(SatelliteType type) {
+        return type == SatelliteType.IMAGE;
     }
 }

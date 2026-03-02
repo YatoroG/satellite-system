@@ -3,16 +3,20 @@ package sys;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import sys.domains.CommunicationSatelliteParam;
+import sys.domains.ImagingSatelliteParam;
 import sys.domains.Satellite;
+import sys.domains.SatelliteParam;
 import sys.factory.SatelliteFactory;
 import sys.factory.impl.CommunicationSatelliteFactory;
 import sys.factory.impl.ImagingSatelliteFactory;
 import sys.repository.ConstellationRepository;
 import sys.service.SpaceOperationCenterService;
+import sys.utils.SpaceOperationException;
 
 @SpringBootApplication
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SpaceOperationException {
         System.out.println("ЗАПУСК СИСТЕМЫ УПРАВЛЕНИЯ СПУТНИКОВОЙ ГРУППИРОВКОЙ");
         System.out.println("============================================================");
 
@@ -26,11 +30,17 @@ public class Main {
         SatelliteFactory commFactory = ctx.getBean(CommunicationSatelliteFactory.class);
         SatelliteFactory imgFactory = ctx.getBean(ImagingSatelliteFactory.class);
 
-        Satellite comm1 = commFactory.createSatelliteWithParameter("Связь-1", 0.85, 500.0);
-        Satellite comm2 = commFactory.createSatelliteWithParameter("Связь-2", 0.75, 1000.0);
-        Satellite img1 = imgFactory.createSatelliteWithParameter("ДЗЗ-1", 0.92, 2.5);
-        Satellite img2 = imgFactory.createSatelliteWithParameter("ДЗЗ-2", 0.45, 2.5);
-        Satellite img3 = imgFactory.createSatelliteWithParameter("ДЗЗ-3", 0.15, 1.0);
+        SatelliteParam commParam1 = new CommunicationSatelliteParam("Связь-1", 0.85, 500.0);
+        SatelliteParam commParam2 = new CommunicationSatelliteParam("Связь-2", 0.75, 1000.0);
+        SatelliteParam imgParam1 = new ImagingSatelliteParam("ДЗЗ-1", 0.92, 2.5);
+        SatelliteParam imgParam2 = new ImagingSatelliteParam("ДЗЗ-2", 0.45, 2.5);
+        SatelliteParam imgParam3 = new ImagingSatelliteParam("ДЗЗ-3", 0.15, 1.0);
+
+        Satellite comm1 = commFactory.createSatelliteWithParameter(commParam1);
+        Satellite comm2 = commFactory.createSatelliteWithParameter(commParam2);
+        Satellite img1 = imgFactory.createSatelliteWithParameter(imgParam1);
+        Satellite img2 = imgFactory.createSatelliteWithParameter(imgParam2);
+        Satellite img3 = imgFactory.createSatelliteWithParameter(imgParam3);
 
         System.out.println("---------------------------------------------");
 

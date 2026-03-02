@@ -1,22 +1,29 @@
 package sys.factory.impl;
 
 import org.springframework.stereotype.Component;
-import sys.domains.CommunicationSatellite;
-import sys.domains.Satellite;
+import sys.domains.*;
 import sys.factory.SatelliteFactory;
-
-import static sys.constants.SatelliteConstants.DEFAULT_BANDWIDTH;
+import sys.utils.SatelliteType;
+import sys.utils.SpaceOperationException;
 
 @Component
 public class CommunicationSatelliteFactory implements SatelliteFactory {
 
     @Override
-    public Satellite createSatellite(String name, double batteryLevel) {
-        return new CommunicationSatellite(name, batteryLevel, DEFAULT_BANDWIDTH);
+    public Satellite createSatelliteWithParameter(SatelliteParam param) throws SpaceOperationException {
+        if (!(param instanceof CommunicationSatelliteParam communicationSatelliteParam)) {
+            throw new SpaceOperationException("Ошибка в параметре для спутника связи");
+        }
+
+        return new CommunicationSatellite(
+                communicationSatelliteParam.getName(),
+                communicationSatelliteParam.getBatteryLevel(),
+                communicationSatelliteParam.getBandwidth()
+        );
     }
 
     @Override
-    public Satellite createSatelliteWithParameter(String name, double batteryLevel, double parameter) {
-        return new CommunicationSatellite(name, batteryLevel, parameter);
+    public boolean isSatelliteTypeSupported(SatelliteType type) {
+        return type == SatelliteType.COMMUNICATION;
     }
 }
