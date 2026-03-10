@@ -18,17 +18,10 @@ public class SatelliteServiceImpl implements SatelliteService {
 
     @Override
     public Satellite createSatellite(SatelliteParam param) throws SpaceOperationException {
-        SatelliteFactory factory = null;
-        for (SatelliteFactory f : factories) {
-            if (f.isSatelliteTypeSupported(param.getType())) {
-                factory = f;
-                break;
-            }
-        }
-
-        if (factory == null) {
-            throw new SpaceOperationException("Ошибка в типе спутника");
-        }
+        SatelliteFactory factory = factories.stream()
+                .filter(satelliteFactory -> satelliteFactory.isSatelliteTypeSupported(param.getType()))
+                .findFirst()
+                .orElseThrow(() -> new SpaceOperationException("Ошибка в типе спутника"));
 
         return factory.createSatelliteWithParameter(param);
     }

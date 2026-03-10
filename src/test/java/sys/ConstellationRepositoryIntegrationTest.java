@@ -34,18 +34,10 @@ public class ConstellationRepositoryIntegrationTest {
     private SpaceOperationCenterService service;
 
     @Autowired
-    private SatelliteFactory commFactory;
+    private CommunicationSatelliteFactory commFactory;
 
     @Autowired
-    private SatelliteFactory imgFactory;
-
-    @BeforeEach
-    void setUp() {
-        repository = new ConstellationRepository();
-        service = new SpaceOperationCenterService(repository);
-        commFactory = new CommunicationSatelliteFactory();
-        imgFactory = new ImagingSatelliteFactory();
-    }
+    private ImagingSatelliteFactory imgFactory;
 
     @Test
     @DisplayName("Тестирование репозитория")

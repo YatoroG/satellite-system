@@ -11,7 +11,8 @@ public class CommunicationSatelliteFactory implements SatelliteFactory {
 
     @Override
     public Satellite createSatelliteWithParameter(SatelliteParam param) throws SpaceOperationException {
-        if (!(param instanceof CommunicationSatelliteParam communicationSatelliteParam)) {
+        if (!(SatelliteType.COMMUNICATION.equals(param.getType())
+                && param instanceof CommunicationSatelliteParam communicationSatelliteParam)) {
             throw new SpaceOperationException("Ошибка в параметре для спутника связи");
         }
 

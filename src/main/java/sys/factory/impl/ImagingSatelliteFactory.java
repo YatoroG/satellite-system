@@ -11,7 +11,8 @@ public class ImagingSatelliteFactory implements SatelliteFactory {
 
     @Override
     public Satellite createSatelliteWithParameter(SatelliteParam param) throws SpaceOperationException {
-        if (!(param instanceof ImagingSatelliteParam imagingSatelliteParam)) {
+        if (!(SatelliteType.IMAGE.equals(param.getType())
+                && param instanceof ImagingSatelliteParam imagingSatelliteParam)) {
             throw new SpaceOperationException("Ошибка в параметре для спутника изображений");
         }
 
